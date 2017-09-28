@@ -9,7 +9,7 @@ def get_password_strength(password):
         score += 1
         return score
     if password.isdigit():
-        score = +2
+        score += 2
         return score
     for symbol in password:
         if low_case_letters == False and 97 <= ord(symbol) <= 122:
@@ -28,6 +28,7 @@ def get_password_strength(password):
     if low_case_letters and up_case_letters and numerical_digits and special_characters:
         score = 10
         return score
+    return score
 
 
 if __name__ == '__main__':
