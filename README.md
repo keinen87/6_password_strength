@@ -8,7 +8,7 @@ Launch on Linux( Python 3.5 ) or Windows as simple
 $ python password_strength.py <password>
 # For example, python password_strength.py 12345
 # You will see
-0
+Password strength: 0
 ```
 
 # Project Goals
