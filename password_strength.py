@@ -1,12 +1,21 @@
 import getpass
 import string
+import os
 
-blacklist = ['12345', 'qwerty', 'qwaszx', '1q2w3e']
+
+def load_blacklist(filepath):
+    if not os.path.exists(filepath):
+        return None
+    with open(filepath,'r') as textfile:
+        blacklist = [line.strip() for line in textfile]
+        return blacklist 
 
 
-def get_password_strength(password):
+def get_password_strength(password, blacklist):
     score = 0
-    if password in blacklist or len(password) < 5:
+    min_length_bound = 5
+    max_lenght_bound = 8
+    if password in blacklist or len(password) < min_length_bound:
         return score
     has_lowercase_symbols = any(symbol in string.ascii_lowercase
                                 for symbol in password)
@@ -18,7 +27,7 @@ def get_password_strength(password):
                               for symbol in password)
     score = sum([has_lowercase_symbols, has_uppercase_symbols,
                  has_digit_symbols, has_special_symbols]) * 2.5
-    if 5 <= len(password) < 8:
+    if min_length_bound <= len(password) < max_lenght_bound:
         score -= 2
         return score
     else:
@@ -27,5 +36,6 @@ def get_password_strength(password):
 
 if __name__ == '__main__':
     password = getpass.getpass()
+    filepath = input('Enter path: ')
     print('Password strength: {0}'.format(
-        str(get_password_strength(password))))
+        str(get_password_strength(password,load_blacklist(filepath)))))
