@@ -1,20 +1,31 @@
+import getpass
 import string
-import sys
+
+blacklist = ['12345', 'qwerty', 'qwaszx', '1q2w3e']
 
 
 def get_password_strength(password):
     score = 0
-    content = [bool([symbol for symbol in password if symbol in symbols_kit])
-           for symbols_kit in [string.ascii_lowercase, string.ascii_uppercase,
-                               string.digits, string.punctuation]]
-    score = [2.5 for has_content in content if has_content]
-    return sum(score)
+    if password in blacklist or len(password) < 5:
+        return score
+    has_lowercase_symbols = any(symbol in string.ascii_lowercase
+                                for symbol in password)
+    has_uppercase_symbols = any(symbol in string.ascii_uppercase
+                                for symbol in password)
+    has_digit_symbols = any(symbol in string.digits
+                            for symbol in password)
+    has_special_symbols = any(symbol in string.punctuation
+                              for symbol in password)
+    score = sum([has_lowercase_symbols, has_uppercase_symbols,
+                 has_digit_symbols, has_special_symbols]) * 2.5
+    if 5 <= len(password) < 8:
+        score -= 3
+        return score
+    else:
+        return score
 
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        password = sys.argv[1]
-        print('Password strength: {0}'.format(
-            str(get_password_strength(password))))
-    else:
-        print('Error! Enter password!')
+    password = getpass.getpass()
+    print('Password strength: {0}'.format(
+        str(get_password_strength(password))))
