@@ -6,9 +6,9 @@ import os
 def load_blacklist(filepath):
     if not os.path.exists(filepath):
         return None
-    with open(filepath,'r') as textfile:
+    with open(filepath, 'r') as textfile:
         blacklist = [line.strip() for line in textfile]
-        return blacklist 
+        return blacklist
 
 
 def get_password_strength(password, blacklist):
@@ -38,4 +38,4 @@ if __name__ == '__main__':
     password = getpass.getpass()
     filepath = input('Enter path: ')
     print('Password strength: {0}'.format(
-        str(get_password_strength(password,load_blacklist(filepath)))))
+        str(get_password_strength(password, load_blacklist(filepath)))))
