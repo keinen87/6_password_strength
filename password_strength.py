@@ -19,7 +19,7 @@ def get_password_strength(password):
     score = sum([has_lowercase_symbols, has_uppercase_symbols,
                  has_digit_symbols, has_special_symbols]) * 2.5
     if 5 <= len(password) < 8:
-        score -= 3
+        score -= 2
         return score
     else:
         return score
