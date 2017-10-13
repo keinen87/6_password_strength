@@ -11,11 +11,15 @@ def load_blacklist(filepath):
         return blacklist
 
 
-def get_password_strength(password, blacklist):
+def check_in_blacklist(password, blacklist):
+    if password in blacklist:
+        return True
+
+def get_password_strength(password):
     score = 0
     min_length_bound = 5
     max_lenght_bound = 8
-    if password in blacklist or len(password) < min_length_bound:
+    if check_in_blacklist() or len(password) < min_length_bound:
         return score
     has_lowercase_symbols = any(symbol in string.ascii_lowercase
                                 for symbol in password)
@@ -29,13 +33,12 @@ def get_password_strength(password, blacklist):
                  has_digit_symbols, has_special_symbols]) * 2.5
     if min_length_bound <= len(password) < max_lenght_bound:
         score -= 2
-        return score
-    else:
-        return score
+    return score
 
 
 if __name__ == '__main__':
     password = getpass.getpass()
-    filepath = input('Enter path: ')
+    filepath = 'https://github.com/keinen87/6_password_strength/blob/master/blacklist.txt'
+    
     print('Password strength: {0}'.format(
         str(get_password_strength(password, load_blacklist(filepath)))))
