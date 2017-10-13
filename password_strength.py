@@ -1,25 +1,30 @@
 import getpass
 import string
-import os
+import urllib.request
 
 
-def load_blacklist(filepath):
-    if not os.path.exists(filepath):
-        return None
-    with open(filepath, 'r') as textfile:
-        blacklist = [line.strip() for line in textfile]
-        return blacklist
+def load_blacklist_file(url):
+    error_message = 'Error!'
+    try:
+        http_response = urllib.request.urlopen(url)
+        return http_response.read().decode('utf-8')
+    except urllib.error.HTTPError:
+        return error_message
+    except urllib.error.URLError:
+        return error_message
 
 
 def check_in_blacklist(password, blacklist):
     if password in blacklist:
         return True
 
+
 def get_password_strength(password):
     score = 0
     min_length_bound = 5
     max_lenght_bound = 8
-    if check_in_blacklist() or len(password) < min_length_bound:
+    if check_in_blacklist(password, load_blacklist_file(filepath)) or \
+            len(password) < min_length_bound:
         return score
     has_lowercase_symbols = any(symbol in string.ascii_lowercase
                                 for symbol in password)
@@ -38,7 +43,7 @@ def get_password_strength(password):
 
 if __name__ == '__main__':
     password = getpass.getpass()
-    filepath = 'https://github.com/keinen87/6_password_strength/blob/master/blacklist.txt'
-    
+    filepath = 'https://raw.githubusercontent.com/keinen87/6_password_strength/\
+                master/blacklist.txt'
     print('Password strength: {0}'.format(
-        str(get_password_strength(password, load_blacklist(filepath)))))
+        str(get_password_strength(password))))
