@@ -3,23 +3,22 @@
 The script shows level of password strength from 1(very weak) to 10(very strong)
 
 # Quickstart
-Before checking your password you may to download blacklist.txt file from this repository
-or create own file(file name at your discretion)
+Before checking your password you may to download blacklist.txt file from this repository to folder
+with script (or to another place - on Windows systems replace '\' on '/' at input the path) or create own file(file name at your discretion)
 For example, we create blacklist.txt with contents:
 >12345
 >qwerty
 >Password1
 
 Launch on Linux( Python 3.5 ) or Windows as simple
-```#bash
-$ python password_strength.py
-# You need to enter password(password is shielded) and path(without quotes, on Windows
-# systems replace '\' on '/'
+```bash
+$ python password_strength.py blacklist.txt
+# You need to enter password(password is shielded)
 Password:
-Enter path:
-# For example, password_strength.py
+# For example, we checking easy password 12345, it in our blacklist
+# python password_strength.py blacklist.txt
+# You will see
 Password: *****
-Enter path: /home/user/Downloads/blacklist.txt
 # You will see
 Password strength: 0
 ```
