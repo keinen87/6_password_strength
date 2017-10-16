@@ -35,10 +35,10 @@ def get_password_strength(password, blacklist):
     max_lenght_bound = 8
     if blacklist or len(password) < min_length_bound:
         return score
-    score = sum([is_password_on_lowercase(password),
-                 is_password_on_uppercase(password),
-                 is_password_on_digit_symbols(password),
-                 is_password_on_special_symbols(password)
+    score = sum([is_password_in_lowercase(password),
+                 is_password_in_uppercase(password),
+                 is_password_in_digit_symbols(password),
+                 is_password_in_special_symbols(password)
                  ]) * 2.5
     if min_length_bound <= len(password) < max_lenght_bound:
         score -= 2
